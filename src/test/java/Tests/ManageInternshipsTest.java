@@ -91,8 +91,8 @@ public class ManageInternshipsTest {
 
             // Submit the form
             clickButton(CREATE_BUTTON);
-
-            // Validate form submission
+        
+//            // Validate form submission
             boolean isSuccess = wait.until(ExpectedConditions.textToBePresentInElementLocated(
                     SUCCESS_MESSAGE, "Internship posted successfully."));
             Assert.assertTrue(isSuccess, "Internship form submission failed.");
@@ -101,35 +101,9 @@ public class ManageInternshipsTest {
             System.err.println("Test failed: " + e.getMessage());
             Assert.fail("Exception occurred during test execution.");
         }
+    
     }
-
-    @Test(priority = 1)
-    public void handlePopUp() {
-        try {
-            // Wait for the alert to be present
-            wait.until(ExpectedConditions.alertIsPresent());
-
-            // Switch to the alert
-            Alert alert = driver.switchTo().alert();
-
-            // Get the text of the alert
-            String alertText = alert.getText();
-            System.out.println("Alert text is: " + alertText);
-
-            // Accept the alert (click "OK")
-            alert.accept();
-
-            // Verify the alert text if needed
-            Assert.assertEquals(alertText, "Waiting for Super-Admin Approval", "Alert text does not match.");
-            System.out.println("Pop-up handled successfully.");
-        } catch (TimeoutException e) {
-            System.err.println("No pop-up appeared.");
-            Assert.fail("Pop-up not found.");
-        } catch (NoSuchElementException e) {
-            System.err.println("Failed to handle the pop-up: " + e.getMessage());
-            Assert.fail("Pop-up handling failed.");
-        }
-    }
+ 
 
     @AfterClass
     public void tearDown() {

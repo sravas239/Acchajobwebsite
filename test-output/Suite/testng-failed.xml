@@ -14,17 +14,9 @@
           <include name="testInterviewTipsNavigation"/>
         </methods>
       </class> <!-- Tests.ResourcesTest -->
-      <class name="Tests.AdminLoginTest">
-        <methods>
-          <include name="fillJobDetails"/>
-          <include name="adminLogin"/>
-          <include name="setUp"/>
-          <include name="tearDown"/>
-          <include name="navigateToJobsPage"/>
-        </methods>
-      </class> <!-- Tests.AdminLoginTest -->
       <class name="Tests.ManageInternshipsTest">
         <methods>
+          <include name="handlePopUp"/>
           <include name="tearDown"/>
           <include name="setUp"/>
           <include name="fillInternshipForm"/>

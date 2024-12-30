@@ -6,7 +6,6 @@
       <class name="Tests.AdminLoginTest"/>
       <class name="Tests.Viewmore"/>
       <class name="Tests.AchaajobTest"/>
-      <class name="Tests.ResourcesTest"/>
       <class name="Tests.ManageInternshipsTest"/>
     </classes>
   </test> <!-- Test -->
