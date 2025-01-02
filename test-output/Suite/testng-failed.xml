@@ -3,32 +3,13 @@
 <suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Test(failed)">
     <classes>
-      <class name="Tests.ResourcesTest">
+      <class name="Tests.InternshipTest">
         <methods>
-          <include name="teardown"/>
-          <include name="testResumeGeneratorNavigation"/>
-          <include name="testSkillsDevelopmentNavigation"/>
-          <include name="setup"/>
-          <include name="testInternshipTipsNavigation"/>
-          <include name="testBlogNavigation"/>
-          <include name="testInterviewTipsNavigation"/>
-        </methods>
-      </class> <!-- Tests.ResourcesTest -->
-      <class name="Tests.ManageInternshipsTest">
-        <methods>
-          <include name="handlePopUp"/>
           <include name="tearDown"/>
           <include name="setUp"/>
           <include name="fillInternshipForm"/>
         </methods>
-      </class> <!-- Tests.ManageInternshipsTest -->
-      <class name="Tests.Viewmore">
-        <methods>
-          <include name="setUp"/>
-          <include name="tearDown"/>
-          <include name="testViewMoreButton"/>
-        </methods>
-      </class> <!-- Tests.Viewmore -->
+      </class> <!-- Tests.InternshipTest -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

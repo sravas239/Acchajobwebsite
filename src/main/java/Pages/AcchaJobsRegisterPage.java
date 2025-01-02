@@ -1,6 +1,7 @@
 package Pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,8 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 public class AcchaJobsRegisterPage {
 
     // Constructor to initialize PageFactory elements
-    public AcchaJobsRegisterPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
+    public AcchaJobsRegisterPage(WebDriver driver2) {
+        SearchContext driver = null;
+		PageFactory.initElements(driver, this);
     }
 
     // Locators using @FindBy annotation for the Register Form
@@ -91,5 +93,13 @@ public class AcchaJobsRegisterPage {
 	public By getRegisterNowButtonLocator() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public void enterName(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void enterMobile(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 }

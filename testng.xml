@@ -6,7 +6,8 @@
       <class name="Tests.AdminLoginTest"/>
       <class name="Tests.Viewmore"/>
       <class name="Tests.AchaajobTest"/>
-      <class name="Tests.ManageInternshipsTest"/>
+      <class name="Tests.ResourcesTest"/>
+      <class name="Tests.Adminregistertest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

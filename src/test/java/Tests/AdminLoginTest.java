@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.*;
 
+import Pages.Superadminlogin;
+
 import java.time.Duration;
 
 public class AdminLoginTest {
@@ -24,14 +26,15 @@ public class AdminLoginTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().window().maximize();
     }
-
+    
+  
     @Test(priority = 1)
     public void adminLogin() {
         // Navigate to admin login page
         driver.get("https://www.acchajobs.com/adminlogindynamic");
 
         // Log in as admin
-        fillField(By.xpath("//input[@placeholder='Enter your username']"), "john.doe123");
+        fillField(By.xpath("//input[@placeholder='Enter your username']"), "tester@123");
         fillField(By.xpath("//input[@placeholder='Enter your password']"), "Test@1234");
         clickButton(By.xpath("//button[@type='submit']"));
 

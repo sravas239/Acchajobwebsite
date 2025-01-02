@@ -17,7 +17,7 @@ public class Achaajobpage {
     @FindBy(xpath = "//input[@placeholder='Enter skills/designations | Enter location | Enter Experience']")
     private WebElement searchField;
 
-    @FindBy(xpath = "//button[contains(text(),'Search')]")
+    @FindBy(xpath = "//button[@class='search-button']")
     private WebElement searchButton;
 
     @FindBy(xpath = "//a[contains(text(),'Register Now')]")

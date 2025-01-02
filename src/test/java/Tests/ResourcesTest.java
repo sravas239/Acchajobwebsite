@@ -1,66 +1,64 @@
 package Tests;
 
+import java.time.Duration;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-
-
-
 public class ResourcesTest {
 
-    WebDriver driver;
-    Pages.ResourcesPage resourcesPage;
+    private WebDriver driver;
+    private WebDriverWait wait;
+
+    // Locators for navigation items
+    private static final By HOME_NAV = By.linkText("Home");
+    private static final By INTERNSHIPS_NAV = By.linkText("Internships");
+    private static final By ONLINE_TRAINING_NAV = By.linkText("Online Training");
+    private static final By LOGIN_BUTTON = By.xpath("//button[normalize-space()='Login']");
 
     @BeforeClass
-    public void setup() {
-        // Set up WebDriver (update with your driver path)
-       
+    public void setUp() {
         driver = new ChromeDriver();
-     
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().window().maximize();
-
-        // Open the website
-        driver.get("https://www.acchajobs.com/");
-
-        // Initialize the page class
-        resourcesPage = new Pages.ResourcesPage(driver);
+        driver.get("https://www.acchajobs.com");
     }
 
     @Test(priority = 1)
-    public void testBlogNavigation() {
-        resourcesPage.clickBlog();
-        System.out.println("Navigated to Blog page successfully.");
+    public void validateNavigationItems() {
+        // Validate navigation items are displayed
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(HOME_NAV)).isDisplayed(), "Home navigation item is not visible.");
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(INTERNSHIPS_NAV)).isDisplayed(), "Internships navigation item is not visible.");
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(ONLINE_TRAINING_NAV)).isDisplayed(), "Online Training navigation item is not visible.");
+        System.out.println("All navigation items are visible.");
     }
 
     @Test(priority = 2)
-    public void testInternshipTipsNavigation() {
-        resourcesPage.clickInternshipTips();
-        System.out.println("Navigated to Internship Tips page successfully.");
-    }
+    public void validateLoginButtonFunctionality() {
+        // Click the Login button
+        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(LOGIN_BUTTON));
+        loginButton.click();
 
-    @Test(priority = 3)
-    public void testSkillsDevelopmentNavigation() {
-        resourcesPage.clickSkillsDevelopment();
-        System.out.println("Navigated to Skills Development page successfully.");
-    }
-
-    @Test(priority = 4)
-    public void testResumeGeneratorNavigation() {
-        resourcesPage.clickResumeGenerator();
-        System.out.println("Navigated to Resume Generator page successfully.");
-    }
-
-    @Test(priority = 5)
-    public void testInterviewTipsNavigation() {
-        resourcesPage.clickInterviewTips();
-        System.out.println("Navigated to Interview Tips page successfully.");
+        // Validate redirection to login page
+        String expectedUrl = "https://www.acchajobs.com/login"; // Replace with actual login page URL
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
+        String actualUrl = driver.getCurrentUrl();
+        Assert.assertEquals(actualUrl, expectedUrl, "Login button redirection failed.");
+        System.out.println("Login button redirection successful.");
     }
 
     @AfterClass
-    public void teardown() {
-        driver.quit();
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }

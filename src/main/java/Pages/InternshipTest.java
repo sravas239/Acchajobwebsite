@@ -1,8 +1,7 @@
-package Tests;
+package Pages;
 
 import java.time.Duration;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -15,7 +14,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class ManageInternshipsTest {
+public class InternshipTest {
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -29,7 +28,7 @@ public class ManageInternshipsTest {
     private static final By QUALIFICATIONS_FIELD = By.xpath("//input[@formcontrolname='qualifications']");
     private static final By SKILLS_FIELD = By.xpath("//input[@formcontrolname='skills']");
     private static final By DESCRIPTION_FIELD = By.xpath("//textarea[@formcontrolname='description']");
-    private static final By STATUS_FIELD = By.xpath("//input[@formcontrolname='status']");
+    private static final By STATUS_FIELD = By.xpath("//select[@class='ng-dirty ng-valid ng-touched']");
     private static final By START_DATE_FIELD = By.xpath("//input[@formcontrolname='openingStartDate']");
     private static final By LAST_DATE_FIELD = By.xpath("//input[@formcontrolname='lastApplyDate']");
     private static final By OPENINGS_FIELD = By.xpath("//input[@type='number']");
@@ -45,35 +44,17 @@ public class ManageInternshipsTest {
         driver.manage().window().maximize();
 
         try {
-            // Navigate to admin login page
             driver.get("https://www.acchajobs.com/adminlogindynamic");
-
-            // Log in as admin
-            fillField(By.xpath("//input[@placeholder='Enter your username']"), "john.doe123");
-            fillField(By.xpath("//input[@placeholder='Enter your password']"), "Test@1234");
-            clickButton(By.xpath("//button[@type='submit']"));
-
-            // Handle pop-up alert (if displayed)
-            try {
-                wait.until(ExpectedConditions.alertIsPresent());
-                driver.switchTo().alert().accept();
-                System.out.println("Admin logged in successfully.");
-            } catch (TimeoutException e) {
-                System.out.println("No alert displayed.");
-            }
-
-            // Navigate to the internship posting page
-            clickButton(By.xpath("//a[normalize-space()='Internship']"));
-            System.out.println("Navigated to internship page.");
+            loginAsAdmin("tester@123", "Test@1234");
+            navigateToInternshipPage();
         } catch (Exception e) {
-            System.err.println("Setup failed: " + e.getMessage());
+            Assert.fail("Setup failed: " + e.getMessage());
         }
     }
 
     @Test
     public void fillInternshipForm() {
         try {
-            // Fill in the internship form
             fillField(TITLE_FIELD, "Software Engineer Intern");
             fillField(COMPANY_FIELD, "Tech Company");
             fillField(LOCATION_FIELD, "New York");
@@ -82,28 +63,21 @@ public class ManageInternshipsTest {
             fillField(QUALIFICATIONS_FIELD, "Bachelor's in Computer Science");
             fillField(SKILLS_FIELD, "Java, Selenium, TestNG");
             fillField(DESCRIPTION_FIELD, "Work on exciting projects with a talented team.");
-            fillField(STATUS_FIELD, "Open");
+            fillField(STATUS_FIELD, "Active");
             fillField(START_DATE_FIELD, "12/30/2024");
             fillField(LAST_DATE_FIELD, "12/31/2024");
             fillField(OPENINGS_FIELD, "10");
             fillField(PERKS_FIELD, "Free snacks, Flexible hours");
-            fillField(COMPANY_DESCRIPTION_FIELD, "A company focused on delivering quality software solutions.");
 
-            // Submit the form
             clickButton(CREATE_BUTTON);
-        
-//            // Validate form submission
-            boolean isSuccess = wait.until(ExpectedConditions.textToBePresentInElementLocated(
-                    SUCCESS_MESSAGE, "Internship posted successfully."));
-            Assert.assertTrue(isSuccess, "Internship form submission failed.");
-            System.out.println("Internship form submitted successfully.");
+
+            Assert.assertTrue(wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                    SUCCESS_MESSAGE, "Internship posted successfully.")), 
+                    "Internship form submission failed.");
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
-            Assert.fail("Exception occurred during test execution.");
+            Assert.fail("Test failed: " + e.getMessage());
         }
-    
     }
- 
 
     @AfterClass
     public void tearDown() {
@@ -112,23 +86,27 @@ public class ManageInternshipsTest {
         }
     }
 
-    // Utility method to fill input fields
     private void fillField(By locator, String value) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).sendKeys(value);
+    }
+
+    private void clickButton(By locator) {
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+    }
+
+    private void loginAsAdmin(String username, String password) {
+        fillField(By.xpath("//input[@placeholder='Enter your username']"), username);
+        fillField(By.xpath("//input[@placeholder='Enter your password']"), password);
+        clickButton(By.xpath("//button[@type='submit']"));
+
         try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).sendKeys(value);
-        } catch (NoSuchElementException e) {
-            System.err.println("Field not found: " + locator);
-            throw e;
+            wait.until(ExpectedConditions.alertIsPresent()).accept();
+        } catch (TimeoutException e) {
+            // No alert present, continue
         }
     }
 
-    // Utility method to click buttons
-    private void clickButton(By locator) {
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
-        } catch (NoSuchElementException e) {
-            System.err.println("Button not found: " + locator);
-            throw e;
-        }
+    private void navigateToInternshipPage() {
+        clickButton(By.xpath("//a[normalize-space()='Internship']"));
     }
 }

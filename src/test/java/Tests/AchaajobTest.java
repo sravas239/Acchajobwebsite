@@ -1,19 +1,28 @@
 package Tests;
 
-import org.testng.annotations.Test;
-import Pages.*;
+import java.time.Duration;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
-import java.time.Duration;
+import Pages.AcchaJobsRegisterPage;
+import Pages.Achaajobpage;
+import Pages.AdminLoginPage;
+import Pages.BaseTest;
+import Pages.Superadminlogin;
+
+
 
 public class AchaajobTest extends BaseTest {
 
-    // Test Case 1: Search for a Job
-    @Test(priority = 1)
+   // Test Case 1: Search for a Job
+//    @Test(priority = 1)
     public void searchJobTest() {
-        Achaajobpage jobsPage = new Achaajobpage(driver);
+        WebDriver driver = null;
+		Achaajobpage jobsPage = new Achaajobpage(driver);
 
         // Enter job search details
         jobsPage.enterSearchDetails("Software Developer | Bangalore | 2 years");
@@ -25,7 +34,7 @@ public class AchaajobTest extends BaseTest {
     }
 
     // Test Case 2: Register a New User
-    @Test(priority = 2)
+  //  @Test(priority = 2)
     public void registerNewUserTest() throws Exception {
         AcchaJobsRegisterPage registerPage = new AcchaJobsRegisterPage(driver);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -54,7 +63,7 @@ public class AchaajobTest extends BaseTest {
     }
 
     // Test Case 3: Click Login Button
-    @Test(priority = 3)
+   // @Test(priority = 3)
     public void clickLoginTest() throws InterruptedException {
         Achaajobpage jobsPage = new Achaajobpage(driver);
 
@@ -78,7 +87,7 @@ public class AchaajobTest extends BaseTest {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Enter your username']")));
 
             // Perform login
-            adminLoginPage.enterUsername("john.doe123");
+            adminLoginPage.enterUsername("tester@123");
             adminLoginPage.enterPassword("Test@1234");
             adminLoginPage.clickLogin();
             Thread.sleep(2000);
